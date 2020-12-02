@@ -1,0 +1,13 @@
+header
+{
+    background-color: #001CF8;
+    text-align: center;
+    height:100px;
+}
+
+body
+{
+    background-image:url("../img/cuba.jpg");
+    background-repeat: no-repeat;
+    
+}
