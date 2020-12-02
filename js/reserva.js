@@ -2,7 +2,7 @@
 let f = new Date(),dia = f.getDate(),mes=f.getMonth()+1;
 if(dia<10){dia='0'+dia;}
 if(mes<10){mes="0"+mes;}
-let today = (  f.getFullYear() + "-" + mes + "-" + dia );
+let today = (  f.getFullYear() + "-" + mes + "-" + dia);
 document.getElementById("fecha").setAttribute("value", `${today}`);
 document.getElementById("fecha").setAttribute("min", `${today}`);
 document.getElementById("fecha").setAttribute("type", "date");
@@ -12,7 +12,7 @@ let menuNoches = document.createElement("select");
 menuNoches.appendChild(document.createElement("optgroup"));
 menuNoches.appendChild(document.createElement("optgroup"));
 let optgroups = menuNoches.getElementsByTagName("optgroup");
-optgroups[0].setAttribute("label", "noches mas elegidas");
+optgroups[0].setAttribute("label", "comunes");
 let nuevo;
 let nochesPopulares = [4, 7, 10, 14];
 for (let i = 0; i < nochesPopulares.length; i++) {
@@ -23,7 +23,7 @@ for (let i = 0; i < nochesPopulares.length; i++) {
 }
 
 
-optgroups[1].setAttribute("label", "noches");
+optgroups[1].setAttribute("label", "diarias");
 for (let i = 1; i <= 14; i++) {
     nuevo = document.createElement('option');
     nuevo.setAttribute('value', i);
@@ -38,6 +38,9 @@ document.getElementById('aceptar').addEventListener("click",aceptarFormulario);
 
 document.getElementById("rooms").addEventListener('click', mostrarHabitaciones);
 
+/**
+ * Función que nos permite añadir habitaciones 
+ */
 function mostrarHabitaciones() {
 
     nuevo = document.createElement('div');
@@ -65,6 +68,9 @@ function mostrarHabitaciones() {
     }
 }
 
+/**
+ * Función que nos permite crear la habitación con la cantidad de adultos y niños
+ */
 function crearHabitacion() {
 
 
@@ -117,13 +123,15 @@ function crearHabitacion() {
     }
 
 
-
     document.getElementById('newRoom').parentNode.insertBefore(nuevo, document.getElementById('newRoom'));
     document.getElementById('roomContainer').appendChild(nuevo);
 
 }
 
-
+/**
+ *  Función que nos elimina la habitación 
+ * @param  num {*número de la habitación}
+ */
 function cerrarHabitaciones(num) {
     document.getElementById(num).parentNode.removeChild(document.getElementById(num));
     let rooms=document.getElementById('roomContainer').querySelectorAll('.room');
@@ -134,6 +142,10 @@ function cerrarHabitaciones(num) {
     }
 }
 
+/**
+ * Función que nos permite modificar la edad de los niños
+ * @param  id {*}
+ */
 function edadesNiños(id) {
     let numChildren = parseInt(document.getElementById(id).value);
     let numCreated = document.getElementById(id).parentNode.querySelectorAll('select');
@@ -143,13 +155,10 @@ function edadesNiños(id) {
             nuevo = document.createElement('select');
             for (let j = 0; j <= edadMaxima; j++) {
                 let opcion = document.createElement('option');
-                if (j == 0) {
-                    opcion.setAttribute('value', 'age');
-                    opcion.textContent = "Age";
-                } else {
-                    opcion.setAttribute('value', j);
-                    opcion.textContent = j;
-                }
+               
+                opcion.setAttribute('value', j);
+                opcion.textContent = j;
+                
 
                 nuevo.appendChild(opcion);
             }
@@ -160,10 +169,11 @@ function edadesNiños(id) {
             document.getElementById(id).parentNode.removeChild(document.getElementById(id).parentNode.lastChild);
         }
     }
-
-
 }
 
+/**
+ * Función que nos coloca la información en el input
+ */
 function resultados() {
     document.getElementById('roomContainer').style.display = 'none';
     let rooms = document.getElementById('roomContainer').querySelectorAll('.room');
@@ -182,21 +192,29 @@ function resultados() {
 
 }
 
-
+/**
+ * Función que nos enseña en la consola la información que hemos introducido
+ */
 function aceptarFormulario()
 {
     let informacionDestino = document.getElementById('destination').value;
-
     let informacionDate = document.getElementById('fecha').value;
-
     let informacionNoche = document.querySelector('select').value;
-
     let informacionHabitaciones = document.getElementById('rooms').value;
+    let rooms = document.getElementById('roomContainer').querySelectorAll('.room');
+    let roomNum = rooms.length;
 
     console.log('Destino: '+informacionDestino);
     console.log('Fecha: '+informacionDate);
     console.log('Números de Noches:' + informacionNoche);
-    console.log( 'Información de Habitaciones: ' + informacionHabitaciones);
+    console.log('Información de Habitaciones: ' + informacionHabitaciones);
+    for(let i=1 ;i<= roomNum;i++)
+    {
+        console.log('Habitación'+i);
+        console.log('Adultos'+parseInt(document.getElementById(`${i}adults`).value));
+        console.log('Niños'+ parseInt(document.getElementById(`${i}children`).value));
+    }
+    
 }
 
 
