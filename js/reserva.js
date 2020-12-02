@@ -1,6 +1,8 @@
 
-let f = new Date();
-let today = (  f.getFullYear() + "-" + (f.getMonth()+1) + "-" + f.getDate());
+let f = new Date(),dia = f.getDate(),mes=f.getMonth()+1;
+if(dia<10){dia='0'+dia;}
+if(mes<10){mes="0"+mes;}
+let today = (  f.getFullYear() + "-" + mes + "-" + dia );
 document.getElementById("fecha").setAttribute("value", `${today}`);
 document.getElementById("fecha").setAttribute("min", `${today}`);
 document.getElementById("fecha").setAttribute("type", "date");
